@@ -1,0 +1,63 @@
+controllers:
+    resource: ../src/Controller/
+    type: attribute
+
+### User
+
+create_movie:
+    path: /movies
+    controller: App\Controller\MoviesController::createMovie
+    methods: POST
+
+fetch_movie:
+    path: /movies/{id}
+    controller: App\Controller\MoviesController::fetchMovie
+    methods: GET
+
+get_movies:
+    path: /movies
+    controller: App\Controller\MoviesController::getMovies
+    methods: GET
+
+update_movie:
+    path: /movies/{id}
+    controller: App\Controller\MoviesController::updateMovie
+    methods: PUT
+
+delete_movie:
+    path: /movies/{id}
+    controller: App\Controller\MoviesController::deleteMovie
+    methods: DELETE
+
+get_movie_genres:
+    path: /movies/{id}/genre
+    controller: App\Controller\MoviesController::fetchMovieGenres
+    methods: GET
+
+### genre
+
+create_genre:
+    path: /genres
+    controller: App\Controller\GenreController::createGenre
+    methods: POST
+
+get_genre:
+    path: /genres/{id}
+    controller: App\Controller\GenreController::fetchGenre
+    methods: GET
+
+get_genres:
+    path: /genres
+    controller: App\Controller\GenreController::getGenres
+    methods: GET
+
+update_genre:
+    path: /genres/{id}
+    controller: App\Controller\GenreController::updateGenre
+    methods: PUT
+
+delete_genre:
+    path: /genres/{id}
+    controller: App\Controller\GenreController::deleteGenre
+    methods: DELETE
+

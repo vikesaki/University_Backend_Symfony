@@ -1,0 +1,33 @@
+FROM php:8.2-apache
+
+# Updating the package list and installing sqlite3
+RUN apt-get update && apt-get install -y \
+    libsqlite3-dev \
+    sqlite3 \
+    && docker-php-ext-install pdo pdo_mysql pdo_sqlite
+
+# Enable mod_rewrite for Apache
+RUN a2enmod rewrite
+
+# Install the necessary tools
+RUN apt-get update && apt-get install -y zip unzip git && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+# Copy the files of your project to the container
+COPY . /var/www/html
+
+# Install the project dependencies
+RUN composer install --no-interaction
+
+RUN composer require symfony/orm-pack
+
+COPY .env /var/www/html/.env
+# Grant write permissions for SQLite database and cache/logs
+RUN chown -R www-data:www-data /var/www/html/var /var/www/html/Movies.db
+
+EXPOSE 8000
+
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "public/"]
